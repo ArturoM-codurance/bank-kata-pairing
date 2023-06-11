@@ -1,6 +1,7 @@
 package acceptance;
 
 import bankaccount.AccountService;
+import bankaccount.TransactionRepository;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,7 +31,8 @@ public class AccountServiceShould {
     @Test
     void print_the_information_of_the_movements_of_the_account(){
         //Given
-        AccountService accountService = new AccountService();
+        TransactionRepository transactionRepository = new TransactionRepository();
+        AccountService accountService = new AccountService(transactionRepository);
 
         //When
         accountService.deposit(1000);
