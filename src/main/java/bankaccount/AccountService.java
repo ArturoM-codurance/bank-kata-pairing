@@ -13,7 +13,7 @@ public class AccountService {
     }
 
     public void withdraw(int amountToWithdraw) {
-        throw new UnsupportedOperationException();
+        transactionRepository.store(-amountToWithdraw);
     }
 
     public String printStatement() {
