@@ -1,6 +1,7 @@
 package acceptance;
 
 import bankaccount.AccountService;
+import bankaccount.CustomClock;
 import bankaccount.TransactionRepository;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +32,8 @@ public class AccountServiceShould {
     @Test
     void print_the_information_of_the_movements_of_the_account(){
         //Given
-        TransactionRepository transactionRepository = new TransactionRepository();
+        CustomClock customclock = new CustomClock();
+        TransactionRepository transactionRepository = new TransactionRepository(customclock);
         AccountService accountService = new AccountService(transactionRepository);
 
         //When
