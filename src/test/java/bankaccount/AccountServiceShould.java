@@ -11,16 +11,14 @@ class AccountServiceShould {
     void store_transactions(){
         //Arrange
         int amountToStore = 100;
-        CustomClock dateToString = mock(CustomClock.class);
-        Transaction deposit = new Transaction(dateToString, amountToStore);
         TransactionRepository transactionRepository = mock(TransactionRepository.class);
         AccountService accountService = new AccountService(transactionRepository);
 
         //Act
-        accountService.deposit(100);
+        accountService.deposit(amountToStore);
 
         //Assert
-        verify(transactionRepository, times(1)).store(deposit);
+        verify(transactionRepository, times(1)).store(amountToStore);
     }
 
 }
