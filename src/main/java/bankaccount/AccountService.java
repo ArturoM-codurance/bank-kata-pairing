@@ -2,12 +2,14 @@ package bankaccount;
 
 public class AccountService {
 
+    private final TransactionRepository transactionRepository;
+
     public AccountService(TransactionRepository transactionRepository) {
-        throw new UnsupportedOperationException();
+        this.transactionRepository = transactionRepository;
     }
 
     public void deposit(int amountToDeposit) {
-        throw new UnsupportedOperationException();
+        transactionRepository.store(amountToDeposit);
     }
 
     public void withdraw(int amountToWithdraw) {
