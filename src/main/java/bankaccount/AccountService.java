@@ -3,9 +3,11 @@ package bankaccount;
 public class AccountService {
 
     private final TransactionRepository transactionRepository;
+    private StatementPrinter statementPrinter;
 
-    public AccountService(TransactionRepository transactionRepository) {
+    public AccountService(TransactionRepository transactionRepository, StatementPrinter statementPrinter) {
         this.transactionRepository = transactionRepository;
+        this.statementPrinter = statementPrinter;
     }
 
     public void deposit(int amountToDeposit) {
@@ -16,7 +18,7 @@ public class AccountService {
         transactionRepository.store(-amountToWithdraw);
     }
 
-    public String printStatement() {
-        throw new UnsupportedOperationException();
+    public void printStatement() {
+        statementPrinter.print(transactionRepository.allTransactions());
     }
 }
