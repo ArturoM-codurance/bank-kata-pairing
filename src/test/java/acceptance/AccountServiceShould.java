@@ -1,13 +1,19 @@
 package acceptance;
 
-import bankaccount.AccountService;
-import bankaccount.CustomClock;
-import bankaccount.TransactionRepository;
+import bankaccount.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+@ExtendWith(MockitoExtension.class)
 public class AccountServiceShould {
+    @Mock
+    Console console;
+
     /**
      *
      * public interface AccountService
@@ -34,7 +40,8 @@ public class AccountServiceShould {
         //Given
         CustomClock customclock = new CustomClock();
         TransactionRepository transactionRepository = new TransactionRepository(customclock);
-        AccountService accountService = new AccountService(transactionRepository);
+        StatementPrinter statementPrinter = new StatementPrinter(console);
+        AccountService accountService = new AccountService(transactionRepository, statementPrinter);
 
         //When
         accountService.deposit(1000);
@@ -46,7 +53,11 @@ public class AccountServiceShould {
                                        " 14/01/2012 || -500 || 2500\n" +
                                        " 13/01/2012 || 2000 || 3000\n" +
                                        " 10/01/2012 || 1000 || 1000";
-        assertEquals(expectedPrintedOutput, accountService.printStatement());
+//        assertEquals(expectedPrintedOutput, accountService.printStatement());
+        verify(console, times(1)).printLine(" Date || Amount || Balance\n");
+        verify(console, times(1)).printLine(" 14/01/2012 || -500 || 2500\n");
+        verify(console, times(1)).printLine(" 13/01/2012 || 2000 || 3000\n");
+        verify(console, times(1)).printLine(" 10/01/2012 || 1000 || 1000");
     }
 
 }
