@@ -25,7 +25,7 @@ class StatementPrinterShould {
         statementPrinter.print(transactions);
 
         //Assert
-        verify(console, times(1)).printLine(" Date || Amount || Balance\n");
+        verify(console, times(1)).printLine(" Date || Amount || Balance");
     }
 
     @Test

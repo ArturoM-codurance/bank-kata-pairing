@@ -15,6 +15,9 @@ public class printStatementFeature {
     @Mock
     Console console;
 
+    @Mock
+    CustomClock customClock;
+
     /**
      *
      * public interface AccountService
@@ -39,22 +42,19 @@ public class printStatementFeature {
     @Test
     void print_the_information_of_the_movements_of_the_account(){
         //Given
-        CustomClock customclock = new CustomClock();
-        TransactionRepository transactionRepository = new TransactionRepository(customclock);
+        TransactionRepository transactionRepository = new TransactionRepository(customClock);
         StatementPrinter statementPrinter = new StatementPrinter(console);
         AccountService accountService = new AccountService(transactionRepository, statementPrinter);
+        when(customClock.dateAsString()).thenReturn("10/01/2012", "13/01/2012", "14/01/2012");
 
         //When
         accountService.deposit(1000);
         accountService.deposit(2000);
         accountService.withdraw(500);
+        accountService.printStatement();
 
         //Arrange
-        String expectedPrintedOutput = " Date || Amount || Balance" +
-                                       " 14/01/2012 || -500 || 2500" +
-                                       " 13/01/2012 || 2000 || 3000" +
-                                       " 10/01/2012 || 1000 || 1000";
-//        assertEquals(expectedPrintedOutput, accountService.printStatement());
+
         InOrder inOrder = inOrder(console);
         inOrder.verify(console, times(1)).printLine(" Date || Amount || Balance");
         inOrder.verify(console, times(1)).printLine(" 14/01/2012 || -500 || 2500");
