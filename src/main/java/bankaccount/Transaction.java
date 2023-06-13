@@ -11,6 +11,14 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public String formattedToPrint() {
+        return " " + this.date + " || " + this.amount + " ||";
+    }
+
+    public int amount() {
+        return amount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
