@@ -4,6 +4,6 @@ import java.util.List;
 
 public class Console {
     public void printLine(String statementLine) {
-        throw new UnsupportedOperationException();
+        System.out.println(statementLine);
     }
 }
